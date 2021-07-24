@@ -283,8 +283,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e220bd0a0ca6824b94192a4aea4ebdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cannonBall: {fileID: 1372484310546643010, guid: 5c76cee2e6467104cb573d24d706de98, type: 3}
+  cannonBall: {fileID: 900450244395952978, guid: 5c76cee2e6467104cb573d24d706de98, type: 3}
   firePoint: {fileID: 750489691}
+  cannonPower: 1000
 --- !u!1 &427717034 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6572683484597976625, guid: 03a159b0276462c45bc7615674aab4b2, type: 3}
@@ -578,6 +579,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 28.527, y: -106.312, z: 0}
+--- !u!1 &1351583725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6411961143019281681, guid: 03a159b0276462c45bc7615674aab4b2, type: 3}
+  m_PrefabInstance: {fileID: 567318587}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1351583729
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351583725}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6046061591050921919, guid: 03a159b0276462c45bc7615674aab4b2, type: 3}
 --- !u!1 &1605889200
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class CannonBall : MonoBehaviour
 {
-    Rigidbody rb;
+    public float lifetime = 3f;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
-        rb.AddRelativeForce(Vector3.forward * 1000);
+        // should update this to object pooling
+        Destroy(gameObject, lifetime);
     }
 
 }

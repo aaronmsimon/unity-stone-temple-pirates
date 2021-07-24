@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class CannonController : MonoBehaviour
 {
-    public CannonBall cannonBall;
+    public GameObject cannonBall;
     public Transform firePoint;
+    public float cannonPower;
 
     public void Fire()
     {
-        CannonBall newCannonBall = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
+        GameObject newCannonBall = Instantiate(cannonBall, firePoint.position, firePoint.rotation);
+        Rigidbody rb = newCannonBall.GetComponent<Rigidbody>();
+        rb.AddRelativeForce(Vector3.forward * cannonPower);
     }
 }
