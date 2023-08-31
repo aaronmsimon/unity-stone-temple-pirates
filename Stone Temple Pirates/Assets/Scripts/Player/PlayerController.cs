@@ -43,7 +43,6 @@ namespace STP.Player
         private void GetPlayerInput()
         {
             movement = playerControls.Temples.Movement.ReadValue<Vector2>();
-            Debug.Log(movement);
         }
 
         private void MovePlayer()
