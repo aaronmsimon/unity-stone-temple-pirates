@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 namespace STP.Player
@@ -8,8 +6,12 @@ namespace STP.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private float jumpForce = 10f;
+        [SerializeField] private float jumpDecentMultiplier = 2f;
 
         private Vector2 movement;
+        private bool isJumping;
+        private bool hasJumpDescent;
 
         private Rigidbody rb;
         private PlayerControls playerControls;
@@ -23,6 +25,8 @@ namespace STP.Player
         private void OnEnable()
         {
             playerControls.Enable();
+            playerControls.Temples.Jump.started += ctx => JumpStart();
+            playerControls.Temples.Jump.canceled += ctx => JumpEnd();
         }
 
         private void OnDisable()
@@ -33,11 +37,13 @@ namespace STP.Player
         private void Update()
         {
             GetPlayerInput();
+                Debug.Log(Physics.gravity);
         }
 
         private void FixedUpdate()
         {
             MovePlayer();
+            HandleJumpDescent();
         }
 
         private void GetPlayerInput()
@@ -49,6 +55,27 @@ namespace STP.Player
         {
             Vector3 targetPosition = movement * moveSpeed * Time.fixedDeltaTime;
             rb.MovePosition(rb.position + targetPosition);
+        }
+
+        private void JumpStart()
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isJumping = true;
+            hasJumpDescent = false;
+        }
+
+        private void JumpEnd()
+        {
+            isJumping = false;
+        }
+
+        private void HandleJumpDescent()
+        {
+            if (rb.velocity.y < 0 && !hasJumpDescent)
+            {
+                rb.AddForce(Vector3.down * jumpForce * jumpDecentMultiplier, ForceMode.Impulse);
+                hasJumpDescent = true;
+            }
         }
     }
 }
