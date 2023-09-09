@@ -10,8 +10,10 @@ namespace STP.Player
         [SerializeField] private float fallMultiplier = 2.5f;
         [SerializeField] private float lowJumpMultiplier = 2f;
 
-        private Vector2 movement;
+        private float movement;
         private bool isJumping;
+        private Vector3 fallSpeed;
+        private Vector3 lowJumpSpeed;
 
         private Rigidbody rb;
         private PlayerControls playerControls;
@@ -20,6 +22,12 @@ namespace STP.Player
         {
             rb = GetComponent<Rigidbody>();
             playerControls = new PlayerControls();
+        }
+
+        private void Start()
+        {
+            fallSpeed = Vector3.up * Physics.gravity.y * (fallMultiplier - 1);
+            lowJumpSpeed = Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1);
         }
 
         private void OnEnable()
@@ -36,29 +44,29 @@ namespace STP.Player
 
         private void Update()
         {
-            GetPlayerInput();
+            GetMoveInput();
         }
 
         private void FixedUpdate()
         {
-            MovePlayer();
-            JumpPlayer();
+            HandleMovement();
+            HandleJumping();
         }
 
-        private void GetPlayerInput()
+        private void GetMoveInput()
         {
-            movement = playerControls.Temples.Movement.ReadValue<Vector2>();
+            movement = playerControls.Temples.Movement.ReadValue<float>();
         }
 
-        private void MovePlayer()
+        private void HandleMovement()
         {
-            Vector3 targetPosition = movement * moveSpeed * Time.fixedDeltaTime;
+            Vector3 targetPosition = Vector3.right * movement * moveSpeed * Time.fixedDeltaTime;
             rb.MovePosition(rb.position + targetPosition);
         }
 
         private void JumpStart()
         {
-            rb.velocity = Vector3.up * jumpVelocity;
+            rb.AddForce(Vector3.up * jumpVelocity, ForceMode.VelocityChange);
             isJumping = true;
         }
 
@@ -67,15 +75,15 @@ namespace STP.Player
             isJumping = false;
         }
 
-        private void JumpPlayer()
+        private void HandleJumping()
         {
             if (rb.velocity.y < 0)
             {
-                rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+                rb.AddForce(fallSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
             }
             else if (rb.velocity.y > 0 && !isJumping)
             {
-                rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+                rb.AddForce(lowJumpSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
             }
         }
     }
