@@ -6,12 +6,12 @@ namespace STP.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private float jumpForce = 10f;
-        [SerializeField] private float jumpDecentMultiplier = 2f;
+        [SerializeField] private float jumpVelocity = 5f;
+        [SerializeField] private float fallMultiplier = 2.5f;
+        [SerializeField] private float lowJumpMultiplier = 2f;
 
         private Vector2 movement;
         private bool isJumping;
-        private bool hasJumpDescent;
 
         private Rigidbody rb;
         private PlayerControls playerControls;
@@ -26,7 +26,7 @@ namespace STP.Player
         {
             playerControls.Enable();
             playerControls.Temples.Jump.started += ctx => JumpStart();
-            playerControls.Temples.Jump.canceled += ctx => JumpEnd();
+            playerControls.Temples.Jump.canceled += ctx => JumpCancel();
         }
 
         private void OnDisable()
@@ -37,13 +37,12 @@ namespace STP.Player
         private void Update()
         {
             GetPlayerInput();
-                Debug.Log(Physics.gravity);
         }
 
         private void FixedUpdate()
         {
             MovePlayer();
-            HandleJumpDescent();
+            JumpPlayer();
         }
 
         private void GetPlayerInput()
@@ -59,22 +58,24 @@ namespace STP.Player
 
         private void JumpStart()
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.velocity = Vector3.up * jumpVelocity;
             isJumping = true;
-            hasJumpDescent = false;
         }
 
-        private void JumpEnd()
+        private void JumpCancel()
         {
             isJumping = false;
         }
 
-        private void HandleJumpDescent()
+        private void JumpPlayer()
         {
-            if (rb.velocity.y < 0 && !hasJumpDescent)
+            if (rb.velocity.y < 0)
             {
-                rb.AddForce(Vector3.down * jumpForce * jumpDecentMultiplier, ForceMode.Impulse);
-                hasJumpDescent = true;
+                rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+            }
+            else if (rb.velocity.y > 0 && !isJumping)
+            {
+                rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
             }
         }
     }
