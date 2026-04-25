@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd01a25f07313964aa4f069c0c123561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputReader: {fileID: 11400000, guid: cc9cc26da2a891642af5e1edd047109c, type: 2}
   cam: {fileID: 963194227}
 --- !u!114 &214132467
 MonoBehaviour:
@@ -535,7 +536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &219845852
 Transform:
   m_ObjectHideFlags: 0

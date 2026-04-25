@@ -1,26 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using STP.Input;
 
-public class Player : MonoBehaviour
+namespace STP.Ship
 {
-    public Camera cam;
-
-    ShipController ship;
-    CannonController cannons;
-
-    void Start()
+    public class Player : MonoBehaviour
     {
-        ship = GetComponent<ShipController>();
-        cannons = GetComponent<CannonController>();
-    }
+        [SerializeField] private InputReader inputReader;
 
-    void Update()
-    {
-        // Move to selected location
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        public Camera cam;
+
+        ShipController ship;
+        CannonController cannons;
+
+        private Vector2 mousePos;
+
+        private void OnEnable() {
+            inputReader.mouseMoveEvent += OnMouseMove;
+            inputReader.mouseClickEvent += OnMouseClick;
+            inputReader.fireEvent += OnFire;
+        }
+
+        private void Start() {
+            ship = GetComponent<ShipController>();
+            cannons = GetComponent<CannonController>();
+        }
+
+        private void OnDisable() {
+            inputReader.mouseMoveEvent -= OnMouseMove;
+            inputReader.mouseClickEvent -= OnMouseClick;
+            inputReader.fireEvent -= OnFire;
+        }
+
+        private void OnMouseMove(Vector2 pos) {
+            mousePos = pos;
+        }
+
+        private void OnMouseClick() {
+            Ray ray = cam.ScreenPointToRay(mousePos);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
@@ -29,26 +45,8 @@ public class Player : MonoBehaviour
             }
         }
 
-        // Fire
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        private void OnFire() {
             cannons.Fire();
-        }
-
-        // Toggle side
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            // switch sides
-        }
-
-        // Raise/Lower Guns
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            // raise gun angle
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            // lower gun angle
         }
     }
 }
