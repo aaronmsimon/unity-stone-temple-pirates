@@ -118,6 +118,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleDoors"",
+                    ""type"": ""Button"",
+                    ""id"": ""7df53af5-1b4d-449e-b9a7-f14f237fe634"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -153,6 +162,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""MouseMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17c807bc-3591-4209-90b6-f8a4927619c9"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleDoors"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +184,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Gameplay_MouseClick = m_Gameplay.FindAction("MouseClick", throwIfNotFound: true);
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_MouseMove = m_Gameplay.FindAction("MouseMove", throwIfNotFound: true);
+        m_Gameplay_ToggleDoors = m_Gameplay.FindAction("ToggleDoors", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -247,6 +268,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_MouseClick;
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_MouseMove;
+    private readonly InputAction m_Gameplay_ToggleDoors;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -270,6 +292,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/MouseMove".
         /// </summary>
         public InputAction @MouseMove => m_Wrapper.m_Gameplay_MouseMove;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/ToggleDoors".
+        /// </summary>
+        public InputAction @ToggleDoors => m_Wrapper.m_Gameplay_ToggleDoors;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -305,6 +331,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @MouseMove.started += instance.OnMouseMove;
             @MouseMove.performed += instance.OnMouseMove;
             @MouseMove.canceled += instance.OnMouseMove;
+            @ToggleDoors.started += instance.OnToggleDoors;
+            @ToggleDoors.performed += instance.OnToggleDoors;
+            @ToggleDoors.canceled += instance.OnToggleDoors;
         }
 
         /// <summary>
@@ -325,6 +354,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @MouseMove.started -= instance.OnMouseMove;
             @MouseMove.performed -= instance.OnMouseMove;
             @MouseMove.canceled -= instance.OnMouseMove;
+            @ToggleDoors.started -= instance.OnToggleDoors;
+            @ToggleDoors.performed -= instance.OnToggleDoors;
+            @ToggleDoors.canceled -= instance.OnToggleDoors;
         }
 
         /// <summary>
@@ -386,5 +418,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleDoors" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleDoors(InputAction.CallbackContext context);
     }
 }

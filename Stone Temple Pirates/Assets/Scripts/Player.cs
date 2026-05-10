@@ -11,24 +11,28 @@ namespace STP.Ship
 
         ShipController ship;
         CannonController cannons;
+        CannonDoors cannonDoors;
 
         private Vector2 mousePos;
+
+        private void Awake() {
+            ship = GetComponent<ShipController>();
+            cannons = GetComponentInChildren<CannonController>();
+            cannonDoors = GetComponentInChildren<CannonDoors>();
+        }
 
         private void OnEnable() {
             inputReader.mouseMoveEvent += OnMouseMove;
             inputReader.mouseClickEvent += OnMouseClick;
             inputReader.fireEvent += OnFire;
-        }
-
-        private void Start() {
-            ship = GetComponent<ShipController>();
-            cannons = GetComponent<CannonController>();
+            inputReader.toggleDoorsEvent += OnToggleDoors;
         }
 
         private void OnDisable() {
             inputReader.mouseMoveEvent -= OnMouseMove;
             inputReader.mouseClickEvent -= OnMouseClick;
             inputReader.fireEvent -= OnFire;
+            inputReader.toggleDoorsEvent += OnToggleDoors;
         }
 
         private void OnMouseMove(Vector2 pos) {
@@ -47,6 +51,11 @@ namespace STP.Ship
 
         private void OnFire() {
             cannons.Fire();
+        }
+
+        private void OnToggleDoors() {
+            cannonDoors.ToggleDoors();
+            cannons.ToggleCannons();
         }
     }
 }

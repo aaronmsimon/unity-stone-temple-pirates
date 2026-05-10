@@ -11,6 +11,7 @@ namespace STP.Input
         public event UnityAction<Vector2> mouseMoveEvent;
         public event UnityAction mouseClickEvent;
         public event UnityAction fireEvent;
+        public event UnityAction toggleDoorsEvent;
 
         private InputActions inputActions;
 
@@ -50,6 +51,12 @@ namespace STP.Input
         {
             if (context.phase == InputActionPhase.Performed)
                 fireEvent?.Invoke();
+        }
+
+        public void OnToggleDoors(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Performed)
+                toggleDoorsEvent?.Invoke();
         }
 
         // Enable/Disable
