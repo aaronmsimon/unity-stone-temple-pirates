@@ -9,11 +9,12 @@ namespace STP.Ship
 
         public Camera cam;
 
-        ShipController ship;
-        CannonController cannons;
-        CannonDoors cannonDoors;
+        private ShipController ship;
+        private CannonController cannons;
+        private CannonDoors cannonDoors;
 
         private Vector2 mousePos;
+        private bool cannonSideL = true;
 
         private void Awake() {
             ship = GetComponent<ShipController>();
