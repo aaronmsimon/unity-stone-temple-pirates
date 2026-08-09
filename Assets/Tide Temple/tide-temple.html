@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tide Temple — Level Layout</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+–abyss:#050d14;
+–deep:#0a1a26;
+–panel:#0e2331;
+–panel-line:#1c3b4e;
+–pocket-line:#2a4a3a;
+–tide:#3ea8c4;
+–tide-bright:#7fd9ee;
+–foam:#d8f3ee;
+–rust:#c4703e;
+–ember:#e0693a;
+–ice:#9fd8e8;
+–nature:#5fae6b;
+–danger:#e0554a;
+–gold:#d9b25f;
+–muted:#5c7f8c;
+–text:#dcedf0;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(–abyss);color:var(–text);font-family:‘IBM Plex Mono’,monospace;}
+
+body{
+background:
+radial-gradient(ellipse at 20% -10%, rgba(62,168,196,0.10), transparent 55%),
+radial-gradient(ellipse at 90% 110%, rgba(62,168,196,0.07), transparent 50%),
+var(–abyss);
+min-height:100vh;
+padding:40px 24px 80px;
+}
+
+.wrap{max-width:1180px;margin:0 auto;}
+
+header{margin-bottom:36px;}
+.eyebrow{
+font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+color:var(–tide-bright); font-weight:600; margin-bottom:10px;
+display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{content:””;width:22px;height:1px;background:var(–tide-bright);display:inline-block;}
+h1{
+font-family:‘Fraunces’,serif; font-weight:600; font-style:italic;
+font-size:clamp(32px,5vw,52px); margin:0 0 8px; color:var(–foam);
+letter-spacing:-0.01em;
+}
+.sub{color:var(–muted); font-size:14px; max-width:680px; line-height:1.6;}
+
+/* legend */
+.legend{
+display:flex; flex-wrap:wrap; gap:16px; margin:26px 0 6px;
+padding:16px 20px; background:var(–panel); border:1px solid var(–panel-line);
+border-radius:10px; font-size:12px; color:var(–muted);
+}
+.legend-item{display:flex; align-items:center; gap:7px;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.dot.sq{border-radius:3px;}
+
+.callout{
+margin-top:14px; padding:14px 18px; background:rgba(217,178,95,0.07);
+border:1px solid rgba(217,178,95,0.3); border-radius:10px;
+font-size:12.5px; line-height:1.65; color:var(–foam);
+}
+.callout b{color:var(–gold);}
+
+/* river spine */
+.river{
+position:relative;
+margin-top:50px;
+padding-left:26px;
+border-left:2px solid var(–panel-line);
+}
+.river::before{
+content:””;
+position:absolute; left:-2px; top:0; bottom:0; width:2px;
+background:linear-gradient(180deg, var(–tide) 0%, rgba(62,168,196,0.15) 100%);
+}
+
+.room{
+position:relative;
+margin-bottom:26px;
+padding-bottom:26px;
+}
+.room:last-child{margin-bottom:0;}
+
+.room-node{
+position:absolute; left:-33px; top:2px;
+width:16px;height:16px;border-radius:50%;
+background:var(–deep); border:2px solid var(–tide);
+display:flex; align-items:center; justify-content:center;
+}
+.room-node::after{content:””;width:6px;height:6px;border-radius:50%;background:var(–tide-bright);}
+
+.room-card{
+background:var(–panel);
+border:1px solid var(–panel-line);
+border-radius:12px;
+padding:22px 24px;
+transition:border-color .2s ease;
+}
+.room-card:hover{border-color:var(–tide);}
+
+.room-head{
+display:flex; align-items:baseline; justify-content:space-between;
+gap:16px; margin-bottom:6px; flex-wrap:wrap;
+}
+.room-title-group{display:flex; align-items:baseline; gap:12px;}
+.room-num{
+font-family:‘Fraunces’,serif; font-style:italic; font-weight:600;
+color:var(–tide-bright); font-size:15px; opacity:.7;
+}
+.room-title{
+font-family:‘Fraunces’,serif; font-weight:600; font-size:20px;
+color:var(–foam);
+}
+.beat-tag{
+font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+padding:4px 9px; border-radius:20px; font-weight:600;
+white-space:nowrap;
+}
+.beat-intro{background:rgba(95,174,107,0.15); color:var(–nature); border:1px solid rgba(95,174,107,0.35);}
+.beat-puzzle{background:rgba(62,168,196,0.15); color:var(–tide-bright); border:1px solid rgba(62,168,196,0.35);}
+.beat-hybrid{background:rgba(196,112,62,0.18); color:var(–rust); border:1px solid rgba(196,112,62,0.4);}
+.beat-combat{background:rgba(224,85,74,0.15); color:var(–danger); border:1px solid rgba(224,85,74,0.35);}
+.beat-climax{background:rgba(224,105,58,0.2); color:var(–ember); border:1px solid rgba(224,105,58,0.45);}
+.beat-deposit{background:rgba(216,243,238,0.1); color:var(–foam); border:1px solid rgba(216,243,238,0.25);}
+
+.room-desc{color:var(–text); font-size:13.5px; line-height:1.65; margin:12px 0 16px; opacity:.9;}
+
+.paths{display:flex; flex-direction:column; gap:8px; margin-top:14px;}
+.path-row{
+display:grid; grid-template-columns:96px 1fr; gap:12px;
+font-size:12.5px; line-height:1.55; padding:9px 12px;
+background:var(–deep); border-radius:7px; border:1px solid transparent;
+}
+.path-label{
+font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+font-weight:600; padding-top:1px;
+}
+.path-row.pl-home{border-color:rgba(62,168,196,0.3);}
+.path-row.pl-home .path-label{color:var(–tide-bright);}
+.path-row.pl-agnostic{border-color:rgba(216,243,238,0.15);}
+.path-row.pl-agnostic .path-label{color:var(–muted);}
+.path-row.pl-bonus{border-color:rgba(95,174,107,0.25);}
+.path-row.pl-bonus .path-label{color:var(–nature);}
+.path-row.pl-fallback{border-color:rgba(224,85,74,0.2);}
+.path-row.pl-fallback .path-label{color:var(–danger);}
+
+.enemy-chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px;}
+.chip{
+font-size:11px; padding:4px 10px; border-radius:20px;
+background:rgba(224,85,74,0.08); border:1px solid rgba(224,85,74,0.25);
+color:#e79088;
+}
+.chip.chip-new{background:rgba(217,178,95,0.1); border-color:rgba(217,178,95,0.35); color:var(–gold);}
+
+.stone-icon{
+display:inline-flex; align-items:center; justify-content:center;
+width:15px;height:15px;border-radius:4px; font-size:9px; font-weight:700;
+margin-right:5px; vertical-align:middle;
+}
+.s-tide{background:rgba(62,168,196,0.25); color:var(–tide-bright);}
+.s-ice{background:rgba(159,216,232,0.25); color:var(–ice);}
+.s-nature{background:rgba(95,174,107,0.25); color:var(–nature);}
+.s-ember{background:rgba(224,105,58,0.25); color:var(–ember);}
+.s-phantom{background:rgba(180,160,220,0.25); color:#c9b6ea;}
+
+/* pocket room styling */
+.pocket-slot{
+position:relative;
+margin:-8px 0 26px 34px;
+padding-left:26px;
+border-left:2px dashed var(–pocket-line);
+}
+.pocket-slot .room-node{
+left:-9px; top:0;
+border-color:var(–gold); background:var(–deep);
+}
+.pocket-slot .room-node::after{background:var(–gold);}
+.pocket-card{
+background:rgba(217,178,95,0.04);
+border:1px dashed rgba(217,178,95,0.35);
+border-radius:12px;
+padding:18px 22px;
+}
+.pocket-header{
+display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+margin-bottom:8px;
+}
+.pocket-title{
+font-family:‘Fraunces’,serif; font-style:italic; font-weight:600;
+color:var(–gold); font-size:15px;
+}
+.pocket-status{
+font-size:10px; letter-spacing:.08em; text-transform:uppercase; font-weight:600;
+color:var(–muted); border:1px solid var(–panel-line); padding:3px 9px; border-radius:20px;
+}
+.pocket-desc{font-size:12.5px; color:var(–muted); line-height:1.6;}
+.no-fallback-tag{
+display:inline-block; margin-top:10px; font-size:10.5px; font-weight:600;
+letter-spacing:.05em; color:var(–danger); background:rgba(224,85,74,0.1);
+border:1px solid rgba(224,85,74,0.3); padding:4px 10px; border-radius:20px;
+}
+
+footer{
+margin-top:60px; padding-top:24px; border-top:1px solid var(–panel-line);
+font-size:11.5px; color:var(–muted); line-height:1.8;
+}
+footer b{color:var(–text);}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Temple Level Design · Draft Layout v2</div>
+    <h1>The Tide Temple</h1>
+    <div class="sub">Flooded ruins. Water level is the lever — raise it and something opens above, lower it and something is exposed below, always with a cost. Spine-with-pockets structure: one linear critical path, optional dead-end pockets branch off and reconnect to the same point.</div>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><span class="dot" style="background:var(--nature)"></span> Intro</div>
+    <div class="legend-item"><span class="dot" style="background:var(--tide-bright)"></span> Core Puzzle</div>
+    <div class="legend-item"><span class="dot" style="background:var(--rust)"></span> Puzzle–Combat Hybrid</div>
+    <div class="legend-item"><span class="dot" style="background:var(--danger)"></span> Combat</div>
+    <div class="legend-item"><span class="dot" style="background:var(--ember)"></span> Climax</div>
+    <div class="legend-item"><span class="dot" style="background:var(--foam)"></span> Deposit</div>
+    <div class="legend-item"><span class="dot sq" style="background:var(--gold)"></span> Optional Pocket Slot</div>
+  </div>
+
+  <div class="callout">
+    <b>Collectible rule (applies across all temples):</b> every temple contains at least one collectible that requires holding a specific non-home stone that has <b>not yet been surrendered anywhere</b> — no fallback, no baseline solution. A player who wants full completion must plan their stone-return order and visit temples for these pickups <i>before</i> giving up the required stone at another temple. This is intentional and permanently missable if ignored.
+  </div>
+
+  <div class="river">
+
+```
+<!-- ROOM 1 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">01</span>
+        <span class="room-title">The Flooded Nave</span>
+      </div>
+      <span class="beat-tag beat-intro">Intro · Onboarding</span>
+    </div>
+    <div class="room-desc">
+      Player enters at a high, dry entryway overlooking a fully flooded chamber. A single floating platform bobs below. First taste of the water-level lever: a shallow basin control that raises the whole room's water a fixed amount, just enough to reach the exit ledge.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-home">
+        <span class="path-label"><span class="stone-icon s-tide">T</span>Home</span>
+        <span>Raise water once to lift the floating platform to exit-ledge height. Single clean action — no fail state, pure teaching moment.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POCKET SLOT A -->
+<div class="pocket-slot">
+  <div class="room-node"></div>
+  <div class="pocket-card">
+    <div class="pocket-header">
+      <span class="pocket-title">Pocket Slot · Off the Nave</span>
+      <span class="pocket-status">Optional — placement TBD</span>
+    </div>
+    <div class="pocket-desc">
+      Earliest possible branch point — good candidate for the <b>no-fallback collectible</b> per the front-loading strategy discussed (reward players who haven't surrendered other stones yet). Short dead-end, reconnects at the same doorway.
+    </div>
+    <span class="no-fallback-tag">Candidate: no-fallback slot</span>
+  </div>
+</div>
+
+<!-- ROOM 2 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">02</span>
+        <span class="room-title">The Sunken Vault</span>
+      </div>
+      <span class="beat-tag beat-puzzle">Core Puzzle · Lower</span>
+    </div>
+    <div class="room-desc">
+      Introduces the <em>opposite</em> verb. A submerged doorway is visible underwater through a murky gate. Lowering the water reveals the door — but also exposes a coral turret embedded in the vault wall that was previously silenced.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-home">
+        <span class="path-label"><span class="stone-icon s-tide">T</span>Home</span>
+        <span>Lower water to reveal the sunken door. Turret opens fire — cross quickly, or raise/lower to silence-and-reopen in bursts.</span>
+      </div>
+    </div>
+    <div class="enemy-chips">
+      <span class="chip">Coral Turret</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROOM 3 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">03</span>
+        <span class="room-title">The Rusted Gate Hall</span>
+      </div>
+      <span class="beat-tag beat-puzzle">Core Puzzle · Transform</span>
+    </div>
+    <div class="room-desc">
+      A long-sealed iron gate blocks the main path. Raising the water fully submerges the gate; holding it there lets it soak. Lowering the water again leaves the gate visibly rusted and weakened. First puzzle where raise/lower is a two-step sequence rather than a single action.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-home">
+        <span class="path-label"><span class="stone-icon s-tide">T</span>Home</span>
+        <span>Raise to soak the gate, then lower — gate rusts open/weak enough to break through.</span>
+      </div>
+      <div class="path-row pl-agnostic">
+        <span class="path-label">Baseline</span>
+        <span>Side corridor with a longer, harder platforming detour around the gate.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POCKET SLOT B -->
+<div class="pocket-slot">
+  <div class="room-node"></div>
+  <div class="pocket-card">
+    <div class="pocket-header">
+      <span class="pocket-title">Pocket Slot · Off the Gate Hall</span>
+      <span class="pocket-status">Optional — placement TBD</span>
+    </div>
+    <div class="pocket-desc">
+      Still early enough to fit the "visit before losing stones" front-loading idea. Good spot for a standard fallback-having loot pocket (stone-optional access pattern) rather than the no-fallback one — variety in pocket difficulty/type across the temple.
+    </div>
+  </div>
+</div>
+
+<!-- ROOM 4 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">04</span>
+        <span class="room-title">The Switch Cistern</span>
+      </div>
+      <span class="beat-tag beat-puzzle">Core Puzzle · Stone-Optional Access</span>
+    </div>
+    <div class="room-desc">
+      A tall vertical shaft with a switch high on the far wall. No Tide-based route up — deliberately. This room tests whatever else the player is carrying.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-bonus">
+        <span class="path-label"><span class="stone-icon s-nature">N</span>Bonus</span>
+        <span>Grow vines up the shaft wall to climb directly to the switch.</span>
+      </div>
+      <div class="path-row pl-bonus">
+        <span class="path-label"><span class="stone-icon s-ice">I</span>Bonus</span>
+        <span>Freeze standing water into stepped platforms up the shaft.</span>
+      </div>
+      <div class="path-row pl-fallback">
+        <span class="path-label">Fallback</span>
+        <span>No bonus stone: narrow crumbling ledges requiring precise platforming, or an endurance fight against a crab brute guarding a slower manual route.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROOM 5 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">05</span>
+        <span class="room-title">The Tide Pool Gauntlet</span>
+      </div>
+      <span class="beat-tag beat-hybrid">Puzzle–Combat Hybrid</span>
+    </div>
+    <div class="room-desc">
+      The signature room. A long gallery, water at mid-level. Lowering water exposes a floor path <em>and</em> wakes a coral turret; raising water opens a higher walkway <em>and</em> brings the player into eel lunge range. Neither state is safe — the player must alternate, using each state only as long as needed.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-home">
+        <span class="path-label"><span class="stone-icon s-tide">T</span>Home</span>
+        <span>Actively manage raise/lower to thread between turret fire (low water) and eel lunges (high water) while crossing the gallery.</span>
+      </div>
+      <div class="path-row pl-bonus">
+        <span class="path-label"><span class="stone-icon s-ice">I</span>Bonus</span>
+        <span>Freeze an eel mid-lunge to neutralize it — opens a safer window to stay in raised water longer.</span>
+      </div>
+    </div>
+    <div class="enemy-chips">
+      <span class="chip">Coral Turret</span>
+      <span class="chip">Eel / Lamprey</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROOM 6 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">06</span>
+        <span class="room-title">The Drowned Choir</span>
+      </div>
+      <span class="beat-tag beat-combat">Combat</span>
+    </div>
+    <div class="room-desc">
+      A wide chamber, moderate water level. Drowned corpses shamble in from side alcoves; a <b>siren</b> perches on a high ledge, her charm-pull dragging the player toward open water where the corpses can close in. Straightforward arena fight, but Tide gives real tools rather than being a spectator mechanic.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-home">
+        <span class="path-label"><span class="stone-icon s-tide">T</span>Home</span>
+        <span>Raise water to force corpses into deeper water where they slow down; trigger a current to shove grouped enemies into the chamber's spike hazard, or to break the siren's line of sight/pull.</span>
+      </div>
+      <div class="path-row pl-agnostic">
+        <span class="path-label">Baseline</span>
+        <span>Standard melee/ranged combat against the group without using water at all — Tide tools are an advantage, not a requirement. Resisting/escaping the charm-pull is a timing/input challenge on its own.</span>
+      </div>
+    </div>
+    <div class="enemy-chips">
+      <span class="chip">Drowned Corpse ×3</span>
+      <span class="chip chip-new">Siren</span>
+    </div>
+  </div>
+</div>
+
+<!-- POCKET SLOT C -->
+<div class="pocket-slot">
+  <div class="room-node"></div>
+  <div class="pocket-card">
+    <div class="pocket-header">
+      <span class="pocket-title">Pocket Slot · Off the Choir</span>
+      <span class="pocket-status">Optional — placement TBD</span>
+    </div>
+    <div class="pocket-desc">
+      Midpoint pocket. Past the "safe to assume nothing's been lost yet" front-loaded zone, so this is a better home for a <b>standard fallback loot pocket</b> than the no-fallback collectible — a player attempting 100% wouldn't need to rush here specifically before losing stones elsewhere.
+    </div>
+  </div>
+</div>
+
+<!-- ROOM 7 (was collectible room, now folded into standard puzzle framing — kept as pocket-adjacent core room) -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">07</span>
+        <span class="room-title">The Chest Below</span>
+      </div>
+      <span class="beat-tag beat-puzzle">Core Puzzle · Lower / Reveal</span>
+    </div>
+    <div class="room-desc">
+      Small antechamber before the climax. Lowering the water reveals a chest sitting on the drained floor, containing a key item needed for the final door ahead.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-home">
+        <span class="path-label"><span class="stone-icon s-tide">T</span>Home</span>
+        <span>Lower water fully to expose and open the chest.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROOM 8 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">08</span>
+        <span class="room-title">The Reliquary Depths</span>
+      </div>
+      <span class="beat-tag beat-climax">Climax Set-Piece</span>
+    </div>
+    <div class="room-desc">
+      The temple's biggest room — vertical and wide, water level shifting across multiple zones at once rather than one uniform basin. Combines everything taught so far: turret + eel pairing, a rusted-gate echo, a switch-access gap, and a drowned-corpse push — all live simultaneously. The <b>ghost ship / phantom crew</b> makes its appearance here as the temple's unique narrative-flavor threat: spectral sailors that phase in from the deep water as the fight escalates, tying the room back to the "returning what the sea is owed" pirate framing.
+    </div>
+    <div class="paths">
+      <div class="path-row pl-home">
+        <span class="path-label"><span class="stone-icon s-tide">T</span>Home</span>
+        <span>Full mastery check — manage multiple water zones under time and combat pressure using everything taught in rooms 1–6.</span>
+      </div>
+      <div class="path-row pl-bonus">
+        <span class="path-label">Bonus</span>
+        <span>Any Ice/Nature/Ember held opens a shortcut through one specific zone of the room, reducing exposure time.</span>
+      </div>
+    </div>
+    <div class="enemy-chips">
+      <span class="chip">Coral Turret</span>
+      <span class="chip">Eel / Lamprey</span>
+      <span class="chip">Drowned Corpse</span>
+      <span class="chip chip-new">Ghost Ship Crew</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROOM 9 -->
+<div class="room">
+  <div class="room-node"></div>
+  <div class="room-card">
+    <div class="room-head">
+      <div class="room-title-group">
+        <span class="room-num">09</span>
+        <span class="room-title">The Return</span>
+      </div>
+      <span class="beat-tag beat-deposit">Stone Deposit</span>
+    </div>
+    <div class="room-desc">
+      Calm, still water — the first fully placid pool in the temple, a deliberate tonal contrast to everything before it. Minimal mechanically: the narrative beat of surrendering Tide. No combat, no puzzle. Let the room breathe.
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <footer>
+    <b>Structure:</b> 9 spine rooms + 3 optional pocket slots (placement/content still yours to lock). Spine is a strict single line — no forks that reconverge. Pockets are dead-ends that reconnect to the same point on the spine they branch from.<br><br>
+    <b>Enemies in this pass:</b> Drowned Corpse, Coral Turret, Eel/Lamprey, Crab Brute, Siren, Ghost Ship Crew. Water Elemental removed per direction.<br><br>
+    <b>Collectible system:</b> pocket slots can hold either (a) a standard fallback-having loot pocket, stone-optional access pattern, gettable anytime, or (b) the temple's one true no-fallback collectible requiring an un-surrendered non-home stone. Slot A (earliest) is flagged as the natural candidate for the no-fallback collectible, consistent with front-loading it near the entrance.
+  </footer>
+
+</div>
+</body>
+</html>
