@@ -175,9 +175,104 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Temple"",
+            ""id"": ""a875728d-b5e4-4322-bc25-3750e53c5542"",
+            ""actions"": [
+                {
+                    ""name"": ""MoveCharacter"",
+                    ""type"": ""Value"",
+                    ""id"": ""85cb6695-6418-48cc-9e9d-9f633cab0d2d"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Left Stick"",
+                    ""id"": ""7cb53757-9201-45ac-9a19-0325438f2208"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""5a54202a-8033-43c6-be69-3692de9f2859"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c2336120-ed2b-43d9-bc7c-69c25d33f0d7"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""49a47f86-bd11-4ccb-b1d8-0ba5ae6b1297"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""abf919d1-274a-462c-83e0-edb40b669330"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""ee331fb5-a137-490c-a4af-1c79de4216ac"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Gamepad"",
+            ""bindingGroup"": ""Gamepad"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
@@ -185,11 +280,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_MouseMove = m_Gameplay.FindAction("MouseMove", throwIfNotFound: true);
         m_Gameplay_ToggleDoors = m_Gameplay.FindAction("ToggleDoors", throwIfNotFound: true);
+        // Temple
+        m_Temple = asset.FindActionMap("Temple", throwIfNotFound: true);
+        m_Temple_MoveCharacter = m_Temple.FindAction("MoveCharacter", throwIfNotFound: true);
     }
 
     ~@InputActions()
     {
         UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, InputActions.Gameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Temple.enabled, "This will cause a leak and performance issues, InputActions.Temple.Disable() has not been called.");
     }
 
     /// <summary>
@@ -390,6 +489,115 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="GameplayActions" /> instance referencing this action map.
     /// </summary>
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Temple
+    private readonly InputActionMap m_Temple;
+    private List<ITempleActions> m_TempleActionsCallbackInterfaces = new List<ITempleActions>();
+    private readonly InputAction m_Temple_MoveCharacter;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Temple".
+    /// </summary>
+    public struct TempleActions
+    {
+        private @InputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public TempleActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Temple/MoveCharacter".
+        /// </summary>
+        public InputAction @MoveCharacter => m_Wrapper.m_Temple_MoveCharacter;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Temple; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="TempleActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(TempleActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="TempleActions" />
+        public void AddCallbacks(ITempleActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TempleActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TempleActionsCallbackInterfaces.Add(instance);
+            @MoveCharacter.started += instance.OnMoveCharacter;
+            @MoveCharacter.performed += instance.OnMoveCharacter;
+            @MoveCharacter.canceled += instance.OnMoveCharacter;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="TempleActions" />
+        private void UnregisterCallbacks(ITempleActions instance)
+        {
+            @MoveCharacter.started -= instance.OnMoveCharacter;
+            @MoveCharacter.performed -= instance.OnMoveCharacter;
+            @MoveCharacter.canceled -= instance.OnMoveCharacter;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TempleActions.UnregisterCallbacks(ITempleActions)" />.
+        /// </summary>
+        /// <seealso cref="TempleActions.UnregisterCallbacks(ITempleActions)" />
+        public void RemoveCallbacks(ITempleActions instance)
+        {
+            if (m_Wrapper.m_TempleActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="TempleActions.AddCallbacks(ITempleActions)" />
+        /// <seealso cref="TempleActions.RemoveCallbacks(ITempleActions)" />
+        /// <seealso cref="TempleActions.UnregisterCallbacks(ITempleActions)" />
+        public void SetCallbacks(ITempleActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TempleActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TempleActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="TempleActions" /> instance referencing this action map.
+    /// </summary>
+    public TempleActions @Temple => new TempleActions(this);
+    private int m_GamepadSchemeIndex = -1;
+    /// <summary>
+    /// Provides access to the input control scheme.
+    /// </summary>
+    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
+    public InputControlScheme GamepadScheme
+    {
+        get
+        {
+            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+            return asset.controlSchemes[m_GamepadSchemeIndex];
+        }
+    }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -425,5 +633,20 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleDoors(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Temple" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="TempleActions.AddCallbacks(ITempleActions)" />
+    /// <seealso cref="TempleActions.RemoveCallbacks(ITempleActions)" />
+    public interface ITempleActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "MoveCharacter" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCharacter(InputAction.CallbackContext context);
     }
 }

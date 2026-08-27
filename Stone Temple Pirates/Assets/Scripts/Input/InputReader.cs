@@ -5,13 +5,16 @@ using UnityEngine.Events;
 namespace STP.Input
 {
     [CreateAssetMenu(fileName = "InputReader", menuName = "Game/Input Reader")]
-    public class InputReader : ScriptableObject, InputActions.IGameplayActions
+    public class InputReader : ScriptableObject, InputActions.IGameplayActions, InputActions.ITempleActions
     {
         // Gameplay
         public event UnityAction<Vector2> mouseMoveEvent;
         public event UnityAction mouseClickEvent;
         public event UnityAction fireEvent;
         public event UnityAction toggleDoorsEvent;
+
+        // Temple
+        public event UnityAction<float> moveEvent;
 
         private InputActions inputActions;
 
@@ -21,6 +24,7 @@ namespace STP.Input
             {
                 inputActions = new InputActions();
                 inputActions.Gameplay.SetCallbacks(this);
+                inputActions.Temple.SetCallbacks(this);
             }
 
             EnableGameplayInput();
@@ -59,16 +63,34 @@ namespace STP.Input
                 toggleDoorsEvent?.Invoke();
         }
 
+        // Temple
+
+        public void OnMoveCharacter(InputAction.CallbackContext context)
+        {
+        	if (moveEvent != null)
+        	{
+        		moveEvent?.Invoke(context.ReadValue<float>());
+        	}
+        }
+
         // Enable/Disable
 
         public void EnableGameplayInput()
         {
             inputActions.Gameplay.Enable();
+            inputActions.Temple.Disable();
+        }
+
+        public void EnableTempleInput()
+        {
+            inputActions.Temple.Enable();
+            inputActions.Gameplay.Disable();
         }
 
         public void DisableAllInput()
         {
             inputActions.Gameplay.Disable();
+            inputActions.Temple.Disable();
         }
     }
 }
