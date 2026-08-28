@@ -1,191 +1,73 @@
-Absolutely. For the cartoony, hand-painted side-scroller style you’ve been developing, I would not approach limestone by trying to paint realistic rock texture from the beginning. That tends to become noisy and muddy quickly.
+# How to paint stone
 
-Instead, think of each limestone block as a simple readable shape first, then build the illusion of stone through a series of controlled passes:
+Think of each limestone block as a simple readable shape first, then build the illusion of stone through a series of controlled passes:
 
-silhouette → base color → large lighting → edge planes → limestone variation → pits → cracks → chips → selective highlights → cleanup.
+>silhouette → base color → large lighting → edge planes → limestone variation → pits → cracks → chips → selective highlights → cleanup.
 
 That order matters. It keeps the artwork readable even when you’re still learning.
 
-1. Start with a small limestone palette
+### Start with a small limestone palette
 
-Before drawing anything, make yourself a little palette off to the side. Don’t constantly pick new colors from the color selector.
+Before drawing anything, make a little palette off to the side. Don’t constantly pick new colors from the color selector. For a warm Caribbean/Yucatán-inspired limestone, try something approximately like this:
 
-For a warm Caribbean/Yucatán-inspired limestone, try something approximately like this:
+| Purpose | Example |	Use |
+| --- | --- | --- |
+| Deep outline | #403E39 | Exterior silhouette, deepest cracks
+| Dark shadow | #625F56 | Bottom/side planes
+| Warm shadow | #858074 | General shadow
+| Base limestone | #B7AE9C | Main stone color
+| Warm base | #C9BCA3 | Color variation
+| Light limestone | #DDD2BA | Lit surfaces
+| Bright edge | #EEE5D2 | Select highlights
+| Mossy stain | #7E8460 | Optional environmental staining
 
-Purpose	Example	Use
-Deep outline	#403E39	Exterior silhouette, deepest cracks
-Dark shadow	#625F56	Bottom/side planes
-Warm shadow	#858074	General shadow
-Base limestone	#B7AE9C	Main stone color
-Warm base	#C9BCA3	Color variation
-Light limestone	#DDD2BA	Lit surfaces
-Bright edge	#EEE5D2	Select highlights
-Mossy stain	#7E8460	Optional environmental staining
+Doesn’t have to be exact hex values, but the relationship:
 
-Don’t worry about those exact hex values. What’s important is the relationship:
+>dark gray-brown → gray-beige → beige → cream → warm off-white.
 
-dark gray-brown → gray-beige → beige → cream → warm off-white.
-
-Avoid pure black for most outlines and pure white for highlights. Both tend to look harsh.
-
+Avoid pure black for most outlines and pure white for highlights. Both tend to look harsh.  
 Also notice that my darkest colors aren’t simply “darker beige.” They’re cooler and grayer. That gives you much more attractive stone.
 
-⸻
+### PASS 1 — Draw the silhouette
 
-PASS 1 — Draw the silhouette
+Brush: hard-edged opaque brush with pressure controlling size, but little or no opacity variation. Think “digital ink brush” rather than pencil, airbrush, or watercolor.
 
-Brush
-
-Use a:
-
-hard-edged opaque brush with pressure controlling size, but little or no opacity variation.
-
-Think “digital ink brush” rather than pencil, airbrush, or watercolor.
-
-For now, don’t texture anything.
-
-Let’s say you’re drawing one rectangular temple block.
-
-Draw something like:
-
-       __________
-     /           \
-    /             |
-   |              |
-   |              |
-   |              |
-    \____________/
-
-But don’t make it geometrically perfect.
-
-Make one corner slightly higher. Bow one edge outward a little. Flatten another corner. Introduce a tiny irregularity.
+For now, don’t texture anything. Draw one rectangular temple block. Don’t make it geometrically perfect:
+- Make one corner slightly higher
+- Bow one edge outward a little
+- Flatten another corner
+- Introduce a tiny irregularity
 
 Ancient cut limestone should still clearly read as a rectangular architectural block, but not as a computer-generated rectangle.
 
-Outline color
+Instead of black, use your deep gray-brown: #403E39. Make the silhouette fairly chunky. Lean toward a stronger outline than you initially think you need.
 
-Instead of black, use your deep gray-brown:
+### PASS 2 — Fill the base limestone color
 
-#403E39
+Create a layer underneath your outline. Fill the entire block with your base limestone: #B7AE9C
 
-Make the silhouette fairly chunky.
+At this point your block should be incredibly boring. It should be: nice silhouette + flat beige fill.
 
-For the style you’ve been using, I’d err toward a stronger outline than you initially think you need.
+### PASS 3 — Establish the major planes
 
-At game scale, that outline is doing enormous work.
+This is probably the most important step. Before painting “stone,” paint the shape of the block. Imagine your light comes from the upper-left. The top plane gets lighter. The front gets the base color. The bottom/right-facing planes get darker. You don’t need literal 3D perspective. You’re simply communicating thickness.
 
-⸻
+Brush: large hard or semi-hard opaque brush. Not textured. You want large deliberate shapes.
 
-PASS 2 — Fill the base limestone color
+Paint the top-facing areas with: #DDD2BA  
+Paint the right/bottom-facing areas with something around: #858074
 
-Create a layer underneath your outline.
+You now have only 3–4 colors on the entire rock. And it should already look somewhat dimensional. If it doesn’t, don’t proceed to texture yet. Fix the large forms first.
 
-Fill the entire block with your base limestone:
+### PASS 4 — Add the cartoony edge treatment
 
-#B7AE9C
+This is where it starts looking like game art. Real limestone doesn’t conveniently highlight all of its edges. Cartoon limestone does.
 
-At this point your block should be incredibly boring.
+Brush: smaller hard brush.
 
-That’s good.
+Take your lighter cream: #EEE5D2
 
-You want:
-
-nice silhouette + flat beige fill.
-
-Do not start drawing cracks yet.
-
-That’s one of the easiest amateur traps: cracks are fun, so you start drawing fifty cracks before the stone itself has volume.
-
-⸻
-
-PASS 3 — Establish the major planes
-
-This is probably the most important step.
-
-Before painting “stone,” paint the shape of the block.
-
-Imagine your light comes from the upper-left.
-
-The top plane gets lighter.
-
-The front gets the base color.
-
-The bottom/right-facing planes get darker.
-
-Something roughly like:
-
-       LIGHT
-     __________
-    /_________/|
-   |         | |
-   |  BASE   | |  SHADOW
-   |         | |
-   |_________|/
-       DARK
-
-You don’t need literal 3D perspective. You’re simply communicating thickness.
-
-Brush
-
-Use:
-
-large hard or semi-hard opaque brush.
-
-Not textured.
-
-You want large deliberate shapes.
-
-Paint the top-facing areas with:
-
-#DDD2BA
-
-Paint the right/bottom-facing areas with something around:
-
-#858074
-
-You now have only 3–4 colors on the entire rock.
-
-And it should already look somewhat dimensional.
-
-If it doesn’t, don’t proceed to texture yet.
-
-Fix the large forms first.
-
-⸻
-
-PASS 4 — Add the cartoony edge treatment
-
-This is where it starts looking like game art.
-
-Real limestone doesn’t conveniently highlight all of its edges. Cartoon limestone does.
-
-Take your lighter cream:
-
-#EEE5D2
-
-Use a smaller hard brush.
-
-Trace selected portions of the upper-left edges.
-
-Not the entire block.
-
-For example:
-
-   HHHHH
-  H______
- /       |
-H        |
-|        |
-|        |
-|_______D
-       D
-
-H = highlight.
-
-D = dark accent.
-
-So you might put:
-
+Trace selected portions of the upper-left edges, not the entire block. So you might put:
 * bright cream along 60–70% of the upper edge
 * a little highlight on the upper-left corner
 * short highlights along some chipped surfaces
@@ -193,45 +75,21 @@ So you might put:
 
 This creates the chunky carved game-stone appearance you’ve been seeing in your generated temple assets.
 
-Important
+Important: Don’t make the highlight a perfectly straight line. Break it.  
+Instead of:  
+────────────  
+do:  
+──── ──  ─────  
+Stone edges are imperfect.  
 
-Don’t make the highlight a perfectly straight line.
+### PASS 5 — Introduce limestone color variation
 
-Break it.
+Now we’re finally going to make beige look like limestone. Create a clipped layer above the base.
 
-Instead of:
+Brush: large, low-opacity, irregular/cloudy brush. Something with uneven edges is useful here. Sponge-like, chalky, cloudy, granular—anything that produces broad irregular patches. Opacity around 10–25% is plenty.
 
-────────────
-
-do:
-
-──── ──  ─────
-
-Stone edges are imperfect.
-
-⸻
-
-PASS 5 — Introduce limestone color variation
-
-Now we’re finally going to make beige look like limestone.
-
-Create a clipped layer above the base.
-
-Use a:
-
-large, low-opacity, irregular/cloudy brush.
-
-Something with uneven edges is useful here. Sponge-like, chalky, cloudy, granular—anything that produces broad irregular patches.
-
-Opacity around 10–25% is plenty.
-
-Paint some broad areas slightly warmer:
-
-#C9BCA3
-
-And some slightly cooler/darker:
-
-#9D9A8E
+Paint some broad areas slightly warmer: #C9BCA3  
+And some slightly cooler/darker: #9D9A8E  
 
 Think:
 
