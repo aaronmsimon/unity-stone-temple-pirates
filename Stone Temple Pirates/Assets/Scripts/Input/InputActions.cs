@@ -89,94 +89,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     ""name"": ""InputActions"",
     ""maps"": [
         {
-            ""name"": ""Gameplay"",
-            ""id"": ""b57ff26b-7847-45f7-9654-f9916b397d3b"",
-            ""actions"": [
-                {
-                    ""name"": ""MouseClick"",
-                    ""type"": ""Button"",
-                    ""id"": ""8f442adb-b3e1-478b-b572-cfb82cdf2668"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""3134f0a6-c134-4646-ba72-7c56f6c1fc27"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MouseMove"",
-                    ""type"": ""Value"",
-                    ""id"": ""7ddd9264-02af-4b03-916f-72eeeeecf0c3"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""ToggleDoors"",
-                    ""type"": ""Button"",
-                    ""id"": ""7df53af5-1b4d-449e-b9a7-f14f237fe634"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""d04b5684-2ec2-4973-987c-a9e5410cedb7"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseClick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""069f2c46-b6c4-4bbd-94b0-6e18097b7d86"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""139652a9-5ade-4d50-a754-de193bcdeaff"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""17c807bc-3591-4209-90b6-f8a4927619c9"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleDoors"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
             ""name"": ""Temple"",
             ""id"": ""a875728d-b5e4-4322-bc25-3750e53c5542"",
             ""actions"": [
@@ -274,12 +186,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_MouseClick = m_Gameplay.FindAction("MouseClick", throwIfNotFound: true);
-        m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
-        m_Gameplay_MouseMove = m_Gameplay.FindAction("MouseMove", throwIfNotFound: true);
-        m_Gameplay_ToggleDoors = m_Gameplay.FindAction("ToggleDoors", throwIfNotFound: true);
         // Temple
         m_Temple = asset.FindActionMap("Temple", throwIfNotFound: true);
         m_Temple_MoveCharacter = m_Temple.FindAction("MoveCharacter", throwIfNotFound: true);
@@ -287,7 +193,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
 
     ~@InputActions()
     {
-        UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, InputActions.Gameplay.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Temple.enabled, "This will cause a leak and performance issues, InputActions.Temple.Disable() has not been called.");
     }
 
@@ -360,135 +265,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     {
         return asset.FindBinding(bindingMask, out action);
     }
-
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_MouseClick;
-    private readonly InputAction m_Gameplay_Fire;
-    private readonly InputAction m_Gameplay_MouseMove;
-    private readonly InputAction m_Gameplay_ToggleDoors;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Gameplay".
-    /// </summary>
-    public struct GameplayActions
-    {
-        private @InputActions m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public GameplayActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Gameplay/MouseClick".
-        /// </summary>
-        public InputAction @MouseClick => m_Wrapper.m_Gameplay_MouseClick;
-        /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Fire".
-        /// </summary>
-        public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
-        /// <summary>
-        /// Provides access to the underlying input action "Gameplay/MouseMove".
-        /// </summary>
-        public InputAction @MouseMove => m_Wrapper.m_Gameplay_MouseMove;
-        /// <summary>
-        /// Provides access to the underlying input action "Gameplay/ToggleDoors".
-        /// </summary>
-        public InputAction @ToggleDoors => m_Wrapper.m_Gameplay_ToggleDoors;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="GameplayActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="GameplayActions" />
-        public void AddCallbacks(IGameplayActions instance)
-        {
-            if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
-            @MouseClick.started += instance.OnMouseClick;
-            @MouseClick.performed += instance.OnMouseClick;
-            @MouseClick.canceled += instance.OnMouseClick;
-            @Fire.started += instance.OnFire;
-            @Fire.performed += instance.OnFire;
-            @Fire.canceled += instance.OnFire;
-            @MouseMove.started += instance.OnMouseMove;
-            @MouseMove.performed += instance.OnMouseMove;
-            @MouseMove.canceled += instance.OnMouseMove;
-            @ToggleDoors.started += instance.OnToggleDoors;
-            @ToggleDoors.performed += instance.OnToggleDoors;
-            @ToggleDoors.canceled += instance.OnToggleDoors;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="GameplayActions" />
-        private void UnregisterCallbacks(IGameplayActions instance)
-        {
-            @MouseClick.started -= instance.OnMouseClick;
-            @MouseClick.performed -= instance.OnMouseClick;
-            @MouseClick.canceled -= instance.OnMouseClick;
-            @Fire.started -= instance.OnFire;
-            @Fire.performed -= instance.OnFire;
-            @Fire.canceled -= instance.OnFire;
-            @MouseMove.started -= instance.OnMouseMove;
-            @MouseMove.performed -= instance.OnMouseMove;
-            @MouseMove.canceled -= instance.OnMouseMove;
-            @ToggleDoors.started -= instance.OnToggleDoors;
-            @ToggleDoors.performed -= instance.OnToggleDoors;
-            @ToggleDoors.canceled -= instance.OnToggleDoors;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />.
-        /// </summary>
-        /// <seealso cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />
-        public void RemoveCallbacks(IGameplayActions instance)
-        {
-            if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="GameplayActions.AddCallbacks(IGameplayActions)" />
-        /// <seealso cref="GameplayActions.RemoveCallbacks(IGameplayActions)" />
-        /// <seealso cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />
-        public void SetCallbacks(IGameplayActions instance)
-        {
-            foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="GameplayActions" /> instance referencing this action map.
-    /// </summary>
-    public GameplayActions @Gameplay => new GameplayActions(this);
 
     // Temple
     private readonly InputActionMap m_Temple;
@@ -597,42 +373,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="GameplayActions.AddCallbacks(IGameplayActions)" />
-    /// <seealso cref="GameplayActions.RemoveCallbacks(IGameplayActions)" />
-    public interface IGameplayActions
-    {
-        /// <summary>
-        /// Method invoked when associated input action "MouseClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouseClick(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Fire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnFire(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "MouseMove" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouseMove(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "ToggleDoors" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnToggleDoors(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Temple" which allows adding and removing callbacks.
