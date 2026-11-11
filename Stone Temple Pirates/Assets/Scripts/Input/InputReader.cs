@@ -8,7 +8,8 @@ namespace STP.Input
     public class InputReader : ScriptableObject, InputActions.ITempleActions
     {
         // Temple
-        public event UnityAction<float> moveEvent;
+        public event UnityAction<float> moveCharacterEvent;
+        public event UnityAction<bool> stonePowerActivatedEvent;
 
         private InputActions inputActions;
 
@@ -30,12 +31,20 @@ namespace STP.Input
 
         // Temple
 
-        public void OnMove(InputAction.CallbackContext context)
+        public void OnMoveCharacter(InputAction.CallbackContext context)
         {
-        	if (moveEvent != null)
+        	if (moveCharacterEvent != null)
         	{
-        		moveEvent?.Invoke(context.ReadValue<float>());
+        		moveCharacterEvent?.Invoke(context.ReadValue<float>());
         	}
+        }
+
+        public void OnActivateStonePower(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Started)
+                stonePowerActivatedEvent?.Invoke(true);
+            if (context.phase == InputActionPhase.Canceled)
+                stonePowerActivatedEvent?.Invoke(false);
         }
 
         // Enable/Disable

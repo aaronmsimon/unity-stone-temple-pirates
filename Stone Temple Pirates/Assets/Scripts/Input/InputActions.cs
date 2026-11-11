@@ -93,13 +93,22 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             ""id"": ""a875728d-b5e4-4322-bc25-3750e53c5542"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
+                    ""name"": ""MoveCharacter"",
                     ""type"": ""Value"",
                     ""id"": ""85cb6695-6418-48cc-9e9d-9f633cab0d2d"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ActivateStonePower"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8de3230-9e4b-48c9-8b23-d454862a6330"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -110,7 +119,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -121,7 +130,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -132,7 +141,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -143,7 +152,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -154,7 +163,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -165,7 +174,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -176,7 +185,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -187,7 +196,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -198,9 +207,31 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard"",
-                    ""action"": ""Move"",
+                    ""action"": ""MoveCharacter"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""120365fd-9277-48f5-8449-a26406501e5a"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ActivateStonePower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ccc7b45-2e5e-4188-9490-fd1d25bde383"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""ActivateStonePower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -232,7 +263,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
 }");
         // Temple
         m_Temple = asset.FindActionMap("Temple", throwIfNotFound: true);
-        m_Temple_Move = m_Temple.FindAction("Move", throwIfNotFound: true);
+        m_Temple_MoveCharacter = m_Temple.FindAction("MoveCharacter", throwIfNotFound: true);
+        m_Temple_ActivateStonePower = m_Temple.FindAction("ActivateStonePower", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -313,7 +345,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     // Temple
     private readonly InputActionMap m_Temple;
     private List<ITempleActions> m_TempleActionsCallbackInterfaces = new List<ITempleActions>();
-    private readonly InputAction m_Temple_Move;
+    private readonly InputAction m_Temple_MoveCharacter;
+    private readonly InputAction m_Temple_ActivateStonePower;
     /// <summary>
     /// Provides access to input actions defined in input action map "Temple".
     /// </summary>
@@ -326,9 +359,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public TempleActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Temple/Move".
+        /// Provides access to the underlying input action "Temple/MoveCharacter".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_Temple_Move;
+        public InputAction @MoveCharacter => m_Wrapper.m_Temple_MoveCharacter;
+        /// <summary>
+        /// Provides access to the underlying input action "Temple/ActivateStonePower".
+        /// </summary>
+        public InputAction @ActivateStonePower => m_Wrapper.m_Temple_ActivateStonePower;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -355,9 +392,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_TempleActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_TempleActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
+            @MoveCharacter.started += instance.OnMoveCharacter;
+            @MoveCharacter.performed += instance.OnMoveCharacter;
+            @MoveCharacter.canceled += instance.OnMoveCharacter;
+            @ActivateStonePower.started += instance.OnActivateStonePower;
+            @ActivateStonePower.performed += instance.OnActivateStonePower;
+            @ActivateStonePower.canceled += instance.OnActivateStonePower;
         }
 
         /// <summary>
@@ -369,9 +409,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="TempleActions" />
         private void UnregisterCallbacks(ITempleActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
+            @MoveCharacter.started -= instance.OnMoveCharacter;
+            @MoveCharacter.performed -= instance.OnMoveCharacter;
+            @MoveCharacter.canceled -= instance.OnMoveCharacter;
+            @ActivateStonePower.started -= instance.OnActivateStonePower;
+            @ActivateStonePower.performed -= instance.OnActivateStonePower;
+            @ActivateStonePower.canceled -= instance.OnActivateStonePower;
         }
 
         /// <summary>
@@ -439,11 +482,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface ITempleActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "MoveCharacter" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMove(InputAction.CallbackContext context);
+        void OnMoveCharacter(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ActivateStonePower" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnActivateStonePower(InputAction.CallbackContext context);
     }
 }
