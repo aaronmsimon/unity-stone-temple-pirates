@@ -93,7 +93,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             ""id"": ""a875728d-b5e4-4322-bc25-3750e53c5542"",
             ""actions"": [
                 {
-                    ""name"": ""MoveCharacter"",
+                    ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""85cb6695-6418-48cc-9e9d-9f633cab0d2d"",
                     ""expectedControlType"": ""Axis"",
@@ -110,7 +110,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveCharacter"",
+                    ""action"": ""Move"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -121,7 +121,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""MoveCharacter"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -132,18 +132,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""MoveCharacter"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Keyboard"",
+                    ""name"": ""WASD"",
                     ""id"": ""49a47f86-bd11-4ccb-b1d8-0ba5ae6b1297"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveCharacter"",
+                    ""action"": ""Move"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -153,8 +153,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveCharacter"",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -164,8 +164,41 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Arrow Keys"",
+                    ""id"": ""cc271c1e-8cf6-49ee-a6ad-bc9167094253"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MoveCharacter"",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""f3814054-b1e5-4728-ad84-77969eed7873"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""8e911e32-d7f3-4d9e-822e-915973d6e0d3"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -183,12 +216,23 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Keyboard"",
+            ""bindingGroup"": ""Keyboard"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
         // Temple
         m_Temple = asset.FindActionMap("Temple", throwIfNotFound: true);
-        m_Temple_MoveCharacter = m_Temple.FindAction("MoveCharacter", throwIfNotFound: true);
+        m_Temple_Move = m_Temple.FindAction("Move", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -269,7 +313,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     // Temple
     private readonly InputActionMap m_Temple;
     private List<ITempleActions> m_TempleActionsCallbackInterfaces = new List<ITempleActions>();
-    private readonly InputAction m_Temple_MoveCharacter;
+    private readonly InputAction m_Temple_Move;
     /// <summary>
     /// Provides access to input actions defined in input action map "Temple".
     /// </summary>
@@ -282,9 +326,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public TempleActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Temple/MoveCharacter".
+        /// Provides access to the underlying input action "Temple/Move".
         /// </summary>
-        public InputAction @MoveCharacter => m_Wrapper.m_Temple_MoveCharacter;
+        public InputAction @Move => m_Wrapper.m_Temple_Move;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -311,9 +355,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_TempleActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_TempleActionsCallbackInterfaces.Add(instance);
-            @MoveCharacter.started += instance.OnMoveCharacter;
-            @MoveCharacter.performed += instance.OnMoveCharacter;
-            @MoveCharacter.canceled += instance.OnMoveCharacter;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
         }
 
         /// <summary>
@@ -325,9 +369,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="TempleActions" />
         private void UnregisterCallbacks(ITempleActions instance)
         {
-            @MoveCharacter.started -= instance.OnMoveCharacter;
-            @MoveCharacter.performed -= instance.OnMoveCharacter;
-            @MoveCharacter.canceled -= instance.OnMoveCharacter;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
         }
 
         /// <summary>
@@ -374,6 +418,19 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
+    private int m_KeyboardSchemeIndex = -1;
+    /// <summary>
+    /// Provides access to the input control scheme.
+    /// </summary>
+    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
+    public InputControlScheme KeyboardScheme
+    {
+        get
+        {
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+            return asset.controlSchemes[m_KeyboardSchemeIndex];
+        }
+    }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Temple" which allows adding and removing callbacks.
     /// </summary>
@@ -382,11 +439,11 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface ITempleActions
     {
         /// <summary>
-        /// Method invoked when associated input action "MoveCharacter" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMoveCharacter(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
     }
 }

@@ -30,7 +30,7 @@ namespace STP.Input
 
         // Temple
 
-        public void OnMoveCharacter(InputAction.CallbackContext context)
+        public void OnMove(InputAction.CallbackContext context)
         {
         	if (moveEvent != null)
         	{
