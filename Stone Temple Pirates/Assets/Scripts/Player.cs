@@ -1,62 +1,47 @@
 using UnityEngine;
 using STP.Input;
 
-namespace STP.Ship
+public class Player : MonoBehaviour
 {
-    public class Player : MonoBehaviour
-    {
-        [SerializeField] private InputReader inputReader;
+    [SerializeField] private float speed;
+    [SerializeField] private InputReader inputReader;
+    [SerializeField] private GameObject aimSprite;
 
-        public Camera cam;
+    private float moveInput;
 
-        private ShipController ship;
-        private CannonController cannons;
-        private CannonDoors cannonDoors;
+    private Rigidbody rb;
 
-        private Vector2 mousePos;
-        private bool cannonSideL = true;
+    private void Awake() {
+        rb = GetComponent<Rigidbody>();
+    }
 
-        private void Awake() {
-            ship = GetComponent<ShipController>();
-            cannons = GetComponentInChildren<CannonController>();
-            cannonDoors = GetComponentInChildren<CannonDoors>();
-        }
+    private void Start() {
+        inputReader.EnableTempleInput();
+    }
 
-        private void OnEnable() {
-            inputReader.mouseMoveEvent += OnMouseMove;
-            inputReader.mouseClickEvent += OnMouseClick;
-            inputReader.fireEvent += OnFire;
-            inputReader.toggleDoorsEvent += OnToggleDoors;
-        }
+    private void OnEnable() {
+        inputReader.moveCharacterEvent += OnMove;
+        inputReader.stonePowerActivatedEvent += OnStonePowerActivated;
+    }
 
-        private void OnDisable() {
-            inputReader.mouseMoveEvent -= OnMouseMove;
-            inputReader.mouseClickEvent -= OnMouseClick;
-            inputReader.fireEvent -= OnFire;
-            inputReader.toggleDoorsEvent += OnToggleDoors;
-        }
+    private void OnDisable() {
+        inputReader.moveCharacterEvent -= OnMove;
+        inputReader.stonePowerActivatedEvent -= OnStonePowerActivated;
+    }
 
-        private void OnMouseMove(Vector2 pos) {
-            mousePos = pos;
-        }
+    private void FixedUpdate() {
+        Move();
+    }
 
-        private void OnMouseClick() {
-            Ray ray = cam.ScreenPointToRay(mousePos);
-            RaycastHit hit;
+    private void OnMove(float moveInput) {
+        this.moveInput = moveInput;
+    }
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                ship.Move(hit.point);
-            }
-        }
+    private void OnStonePowerActivated(bool active) {
+        aimSprite.SetActive(active);
+    }
 
-        private void OnFire() {
-            cannons.Fire();
-        }
-
-        private void OnToggleDoors() {
-            cannonDoors.ToggleDoors();
-            cannons.ToggleCannons();
-        }
+    private void Move() {
+        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
     }
 }
